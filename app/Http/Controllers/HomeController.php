@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
+
 class HomeController extends Controller
 {
     /**
@@ -16,6 +18,15 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('index');
+        $products = Product::all();
+        $alerts = [];
+
+        foreach ($products as $product) {
+            if ($product->amount < $product->min_required_amount) {
+                $alerts[] = $product;
+            }
+        }
+
+        return view('index', ['alerts' => $alerts]);
     }
 }

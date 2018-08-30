@@ -32,3 +32,5 @@ Route::resource('user', "UserController");
 Route::resource('product', "ProductController");
 Route::resource('order', "OrderController");
 Route::resource('purchase', "PurchaseController");
+
+Route::get('log', "LogController@index")->name('log.index');

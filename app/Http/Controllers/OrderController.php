@@ -86,10 +86,15 @@ class OrderController extends Controller
             $order->amount = $request->amount[$i];
             $order->price = $request->price[$i];
 
+            // increase product amount
+            $product = Product::findOrFail($request->product_id[$i]);
+            $product->amount = $product->amount - $request->amount[$i];
+            $product->save();
+
             $order->save();
         }
 
-        return redirect()->route('order.show', ['id' => $order->id]);
+        return redirect()->route('order.index');
     }
 
     /**

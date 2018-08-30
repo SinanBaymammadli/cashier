@@ -83,13 +83,19 @@ class PurchaseController extends Controller
 
             $purchase->user_id = $user->id;
             $purchase->product_id = $request->product_id[$i];
+
+            // increase product amount
+            $product = Product::findOrFail($request->product_id[$i]);
+            $product->amount = $product->amount + $request->amount[$i];
+            $product->save();
+
             $purchase->amount = $request->amount[$i];
             $purchase->price = $request->price[$i];
 
             $purchase->save();
         }
 
-        return redirect()->route('purchase.show', ['id' => $purchase->id]);
+        return redirect()->route('purchase.index');
     }
 
     /**
