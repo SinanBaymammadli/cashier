@@ -5,11 +5,15 @@ return [
         'admin' => [
             'users' => 'c,r,u,d',
             'profile' => 'r,u',
-            'product' => 'c,r,u,d',
+            'products' => 'c,r,u,d',
+            'orders' => 'c,r,u,d',
+            'purchases' => 'c,r,u,d',
         ],
         'user' => [
             'profile' => 'r,u',
-            'product' => 'c,r,u,d',
+            'products' => 'c,r,u,d',
+            'orders' => 'c,r,u,d',
+            'purchases' => 'c,r,u,d',
         ],
     ],
     'permission_structure' => [],

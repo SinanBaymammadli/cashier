@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        if (!auth()->user()->can('read-products')) {
+            return redirect()->route('index')
+                ->withErrors([
+                    'permission' => trans('permission.failed'),
+                ]);
+        }
+
+        $products = Product::all();
+
+        return view('product.index', ['products' => $products]);
     }
 
     /**
@@ -23,7 +39,14 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        if (!auth()->user()->can('create-products')) {
+            return redirect()->route('index')
+                ->withErrors([
+                    'permission' => trans('permission.failed'),
+                ]);
+        }
+
+        return view("product.create");
     }
 
     /**
@@ -34,7 +57,36 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = auth()->user();
+
+        if (!$user->can('create-products')) {
+            return redirect()->route('index')
+                ->withErrors([
+                    'permission' => trans('permission.failed'),
+                ]);
+        }
+
+        // validate request
+        $request->validate([
+            'name' => ['required', 'string', 'max:255', Rule::unique('products')],
+            'amount' => ['required', 'integer', 'min:0'],
+            'min_required_amount' => ['required', 'integer', 'min:0'],
+            'purchase_price' => ['required', 'integer', 'min:0'],
+            'order_price' => ['required', 'integer', 'min:0'],
+        ]);
+
+        $product = new Product;
+
+        $product->user_id = $user->id;
+        $product->name = $request->name;
+        $product->amount = $request->amount;
+        $product->min_required_amount = $request->min_required_amount;
+        $product->purchase_price = $request->purchase_price;
+        $product->order_price = $request->order_price;
+
+        $product->save();
+
+        return redirect()->route('product.show', ['id' => $product->id]);
     }
 
     /**
@@ -45,7 +97,16 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        if (!auth()->user()->can('read-products')) {
+            return redirect()->route('index')
+                ->withErrors([
+                    'permission' => trans('permission.failed'),
+                ]);
+        }
+
+        $product = Product::findOrFail($id);
+
+        return view("product.show", ["product" => $product]);
     }
 
     /**
