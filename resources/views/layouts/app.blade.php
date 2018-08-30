@@ -45,6 +45,24 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('product.index') }}">
+                                    Products
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('order.index') }}">
+                                    Orders
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('purchase.index') }}">
+                                    Purchases
+                                </a>
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -53,18 +71,6 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('user.show', ['user' => auth()->user()]) }}">
                                         Profile
-                                    </a>
-
-                                    <a class="dropdown-item" href="{{ route('product.index') }}">
-                                        Products
-                                    </a>
-
-                                    <a class="dropdown-item" href="{{ route('order.index') }}">
-                                        Orders
-                                    </a>
-
-                                    <a class="dropdown-item" href="{{ route('purchase.index') }}">
-                                        Purchases
                                     </a>
 
                                     @if (auth()->user()->hasRole("admin"))

@@ -66,25 +66,34 @@ class ProductController extends Controller
                 ]);
         }
 
+        //dd($request->all());
+
         // validate request
         $request->validate([
-            'name' => ['required', 'string', 'max:255', Rule::unique('products')],
-            'amount' => ['required', 'integer', 'min:0'],
-            'min_required_amount' => ['required', 'integer', 'min:0'],
-            'purchase_price' => ['required', 'integer', 'min:0'],
-            'order_price' => ['required', 'integer', 'min:0'],
+            'name' => ['required', 'array', Rule::unique('products')],
+            'name.*' => ['required', 'string', 'max:255', 'distinct'],
+            'amount' => ['required', 'array'],
+            'amount.*' => ['required', 'integer', 'min:0'],
+            'min_required_amount' => ['required', 'array'],
+            'min_required_amount.*' => ['required', 'integer', 'min:0'],
+            'purchase_price' => ['required', 'array'],
+            'purchase_price.*' => ['required', 'integer', 'min:0'],
+            'order_price' => ['required', 'array'],
+            'order_price.*' => ['required', 'integer', 'min:0'],
         ]);
 
-        $product = new Product;
+        for ($i = 0; $i < count($request->name); $i++) {
+            $product = new Product;
 
-        $product->user_id = $user->id;
-        $product->name = $request->name;
-        $product->amount = $request->amount;
-        $product->min_required_amount = $request->min_required_amount;
-        $product->purchase_price = $request->purchase_price;
-        $product->order_price = $request->order_price;
+            $product->user_id = $user->id;
+            $product->name = $request->name[$i];
+            $product->amount = $request->amount[$i];
+            $product->min_required_amount = $request->min_required_amount[$i];
+            $product->purchase_price = $request->purchase_price[$i];
+            $product->order_price = $request->order_price[$i];
 
-        $product->save();
+            $product->save();
+        }
 
         return redirect()->route('product.show', ['id' => $product->id]);
     }

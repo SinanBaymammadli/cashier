@@ -21,6 +21,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Date</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -31,6 +32,7 @@
                                 <td>{{ $purchase->product->name }}</td>
                                 <td>{{ $purchase->amount }}</td>
                                 <td>{{ $purchase->price }}</td>
+                                <td>{{ $purchase->created_at }}</td>
                                 <td>
                                     @if(auth()->user()->can("delete-purchases"))
                                         <button type="button" class="btn btn-sm btn-danger" data-purchase-id="{{ $purchase->id }}" data-toggle="modal" data-target="#deletePurchaseModal">

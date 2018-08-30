@@ -21,6 +21,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Date</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -31,6 +32,7 @@
                                 <td>{{ $order->product->name }}</td>
                                 <td>{{ $order->amount }}</td>
                                 <td>{{ $order->price }}</td>
+                                <td>{{ $order->created_at }}</td>
                                 <td>
                                     @if(auth()->user()->can("delete-orders"))
                                         <button type="button" class="btn btn-sm btn-danger" data-order-id="{{ $order->id }}" data-toggle="modal" data-target="#deleteOrderModal">

@@ -10,7 +10,9 @@
                 <form method="post" action="{{ route('product.store') }}">
                     @csrf
 
-                    <div class="form-group row">
+                    <div id="product-create-form"></div>
+
+                    {{-- <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                         <div class="col-md-6">
@@ -78,7 +80,7 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">

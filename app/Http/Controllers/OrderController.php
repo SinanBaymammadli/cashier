@@ -70,19 +70,24 @@ class OrderController extends Controller
 
         // validate request
         $request->validate([
-            'product_id' => ['required', 'exists:products,id'],
-            'amount' => ['required', 'integer', 'min:0'],
-            'price' => ['required', 'integer', 'min:0'],
+            'product_id' => ['required', 'array'],
+            'product_id.*' => ['required', 'exists:products,id'],
+            'amount' => ['required', 'array'],
+            'amount.*' => ['required', 'integer', 'min:0'],
+            'price' => ['required', 'array'],
+            'price.*' => ['required', 'integer', 'min:0'],
         ]);
 
-        $order = new Order;
+        for ($i = 0; $i < count($request->product_id); $i++) {
+            $order = new Order;
 
-        $order->user_id = $user->id;
-        $order->product_id = $request->product_id;
-        $order->amount = $request->amount;
-        $order->price = $request->price;
+            $order->user_id = $user->id;
+            $order->product_id = $request->product_id[$i];
+            $order->amount = $request->amount[$i];
+            $order->price = $request->price[$i];
 
-        $order->save();
+            $order->save();
+        }
 
         return redirect()->route('order.show', ['id' => $order->id]);
     }

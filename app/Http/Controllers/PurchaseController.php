@@ -70,19 +70,24 @@ class PurchaseController extends Controller
 
         // validate request
         $request->validate([
-            'product_id' => ['required', 'exists:products,id'],
-            'amount' => ['required', 'integer', 'min:0'],
-            'price' => ['required', 'integer', 'min:0'],
+            'product_id' => ['required', 'array'],
+            'product_id.*' => ['required', 'exists:products,id'],
+            'amount' => ['required', 'array'],
+            'amount.*' => ['required', 'integer', 'min:0'],
+            'price' => ['required', 'array'],
+            'price.*' => ['required', 'integer', 'min:0'],
         ]);
 
-        $purchase = new Purchase;
+        for ($i = 0; $i < count($request->product_id); $i++) {
+            $purchase = new Purchase;
 
-        $purchase->user_id = $user->id;
-        $purchase->product_id = $request->product_id;
-        $purchase->amount = $request->amount;
-        $purchase->price = $request->price;
+            $purchase->user_id = $user->id;
+            $purchase->product_id = $request->product_id[$i];
+            $purchase->amount = $request->amount[$i];
+            $purchase->price = $request->price[$i];
 
-        $purchase->save();
+            $purchase->save();
+        }
 
         return redirect()->route('purchase.show', ['id' => $purchase->id]);
     }
