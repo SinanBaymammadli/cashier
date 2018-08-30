@@ -19,20 +19,20 @@ $("#deleteUserModal").on("show.bs.modal", e => {
 $("#deleteProductModal").on("show.bs.modal", e => {
   const productId = $(e.relatedTarget).data("productId");
   const deleteProductForm = $("#deleteProductForm");
-  
+
   deleteResource(productId, deleteProductForm);
 });
 
 $("#deletePurchaseModal").on("show.bs.modal", e => {
   const purchaseId = $(e.relatedTarget).data("purchaseId");
   const deletePurchaseForm = $("#deletePurchaseForm");
-  
+
   deleteResource(purchaseId, deletePurchaseForm);
 });
 
 $("#deleteOrderModal").on("show.bs.modal", e => {
   const orderId = $(e.relatedTarget).data("orderId");
   const deleteOrderForm = $("#deleteOrderForm");
-  
+
   deleteResource(orderId, deleteOrderForm);
 });
