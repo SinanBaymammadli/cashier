@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
+use App\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -18,7 +20,16 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        if (!auth()->user()->can('read-orders')) {
+            return redirect()->route('index')
+                ->withErrors([
+                    'permission' => trans('permission.failed'),
+                ]);
+        }
+
+        $orders = Order::all();
+
+        return view('order.index', ['orders' => $orders]);
     }
 
     /**
@@ -28,7 +39,16 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        if (!auth()->user()->can('create-orders')) {
+            return redirect()->route('index')
+                ->withErrors([
+                    'permission' => trans('permission.failed'),
+                ]);
+        }
+
+        $products = Product::all();
+
+        return view("order.create", ['products' => $products]);
     }
 
     /**
@@ -39,7 +59,32 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = auth()->user();
+
+        if (!$user->can('create-orders')) {
+            return redirect()->route('index')
+                ->withErrors([
+                    'permission' => trans('permission.failed'),
+                ]);
+        }
+
+        // validate request
+        $request->validate([
+            'product_id' => ['required', 'exists:products,id'],
+            'amount' => ['required', 'integer', 'min:0'],
+            'price' => ['required', 'integer', 'min:0'],
+        ]);
+
+        $order = new Order;
+
+        $order->user_id = $user->id;
+        $order->product_id = $request->product_id;
+        $order->amount = $request->amount;
+        $order->price = $request->price;
+
+        $order->save();
+
+        return redirect()->route('order.show', ['id' => $order->id]);
     }
 
     /**
@@ -50,7 +95,16 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        if (!auth()->user()->can('read-orders')) {
+            return redirect()->route('index')
+                ->withErrors([
+                    'permission' => trans('permission.failed'),
+                ]);
+        }
+
+        $order = Order::with('product')->findOrFail($id);
+
+        return view("order.show", ["order" => $order]);
     }
 
     /**
