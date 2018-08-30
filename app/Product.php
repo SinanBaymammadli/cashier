@@ -18,16 +18,16 @@ class Product extends Model
 
     public function orders()
     {
-        $this->hasMany('App\Orders');
+        return $this->hasMany('App\Orders');
     }
 
     public function purchases()
     {
-        $this->hasMany("App\Purchase");
+        return $this->hasMany("App\Purchase");
     }
 
     public function user()
     {
-        $this->belongsTo('App\User');
+        return $this->belongsTo('App\User');
     }
 }

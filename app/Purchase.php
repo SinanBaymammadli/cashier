@@ -18,11 +18,11 @@ class Purchase extends Model
 
     public function product()
     {
-        $this->belongsTo('App\Product');
+        return $this->belongsTo('App\Product');
     }
 
     public function user()
     {
-        $this->belongsTo('App\User');
+        return $this->belongsTo('App\User');
     }
 }

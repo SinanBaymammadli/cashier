@@ -59,13 +59,23 @@
                                         Products
                                     </a>
 
+                                    <a class="dropdown-item" href="{{ route('order.index') }}">
+                                        Orders
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('purchase.index') }}">
+                                        Purchases
+                                    </a>
+
                                     @if (auth()->user()->hasRole("admin"))
                                         <a class="dropdown-item" href="{{ route('user.index') }}">
                                             Users
                                         </a>
                                     @endif
 
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <div class="dropdown-divider"></div>
+
+                                    <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}

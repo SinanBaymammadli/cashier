@@ -28283,7 +28283,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(4);
-module.exports = __webpack_require__(10);
+module.exports = __webpack_require__(11);
 
 
 /***/ }),
@@ -28313,7 +28313,7 @@ __webpack_require__(5);
 // });
 
 __webpack_require__(8);
-__webpack_require__(15);
+__webpack_require__(10);
 
 /***/ }),
 /* 5 */
@@ -32378,6 +32378,16 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#product-table-js").DataTable({
   pageLength: 100
 });
 
+__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#purchase-table-js").DataTable({
+  order: [[0, "desc"]],
+  pageLength: 100
+});
+
+__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#order-table-js").DataTable({
+  order: [[0, "desc"]],
+  pageLength: 100
+});
+
 /***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -32571,16 +32581,6 @@ return DataTable;
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32589,17 +32589,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 
 
+function deleteResource(resourceId, form) {
+  var action = form.attr("action");
+  var actionArray = action.split("/");
+  var currentResourceId = actionArray[actionArray.length - 1];
+  var newAction = action.replace(currentResourceId, resourceId);
+
+  form.attr("action", newAction);
+}
+
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#deleteUserModal").on("show.bs.modal", function (e) {
   var userId = __WEBPACK_IMPORTED_MODULE_0_jquery___default()(e.relatedTarget).data("userId");
   var deleteUserForm = __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#deleteUserForm");
 
-  var action = deleteUserForm.attr("action");
-  var actionArray = action.split("/");
-  var currentUserId = actionArray[actionArray.length - 1];
-  var newAction = action.replace(currentUserId, userId);
-
-  deleteUserForm.attr("action", newAction);
+  deleteResource(userId, deleteUserForm);
 });
+
+__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#deleteProductModal").on("show.bs.modal", function (e) {
+  var productId = __WEBPACK_IMPORTED_MODULE_0_jquery___default()(e.relatedTarget).data("productId");
+  var deleteProductForm = __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#deleteProductForm");
+
+  deleteResource(productId, deleteProductForm);
+});
+
+__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#deletePurchaseModal").on("show.bs.modal", function (e) {
+  var purchaseId = __WEBPACK_IMPORTED_MODULE_0_jquery___default()(e.relatedTarget).data("purchaseId");
+  var deletePurchaseForm = __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#deletePurchaseForm");
+
+  deleteResource(purchaseId, deletePurchaseForm);
+});
+
+__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#deleteOrderModal").on("show.bs.modal", function (e) {
+  var orderId = __WEBPACK_IMPORTED_MODULE_0_jquery___default()(e.relatedTarget).data("orderId");
+  var deleteOrderForm = __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#deleteOrderForm");
+
+  deleteResource(orderId, deleteOrderForm);
+});
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

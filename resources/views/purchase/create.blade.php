@@ -4,79 +4,57 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3 class="m-0">Create new user</h3>
+                <h3 class="m-0">Create new purchase</h3>
             </div>
             <div class="card-body">
-                <form method="post" action="{{ route('user.store') }}" aria-label="{{ __('Register') }}">
+                <form method="post" action="{{ route('purchase.store') }}">
                     @csrf
 
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                        <label for="product_id" class="col-md-4 col-form-label text-md-right">Product</label>
 
                         <div class="col-md-6">
-                            <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" required autofocus/>
-
-                            @if($errors->has('name'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" required>
-
-                            @if($errors->has('email'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="role" class="col-md-4 col-form-label text-md-right">Role</label>
-
-                        <div class="col-md-6">
-                            <select class="custom-select form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="role">
-                                @foreach($roles as $role)
-                                    <option value="{{ $role->id }}" {{ $role->id == 3 ? "selected" : null }}>{{ $role->display_name }}</option>
+                            <select class="custom-select form-control{{ $errors->has('product_id') ? ' is-invalid' : '' }}" name="product_id">
+                                @foreach($products as $product)
+                                    <option value="{{ $product->id }}">
+                                        {{ $product->name }}
+                                    </option>
                                 @endforeach
                             </select>
 
-                            @if($errors->has('role'))
+                            @if($errors->has('product_id'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('role') }}</strong>
+                                    <strong>{{ $errors->first('product_id') }}</strong>
                                 </span>
                             @endif
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="password" class="col-md-4 col-form-label text-md-right">
-                            {{ __('Password') }}
-                        </label>
+                        <label for="amount" class="col-md-4 col-form-label text-md-right">Amount</label>
 
                         <div class="col-md-6">
-                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
+                            <input id="amount" type="number" class="form-control{{ $errors->has('amount') ? ' is-invalid' : '' }}" name="amount" required/>
 
-                            @if($errors->has('password'))
+                            @if($errors->has('amount'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('password') }}</strong>
+                                    <strong>{{ $errors->first('amount') }}</strong>
                                 </span>
                             @endif
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                        <label for="price" class="col-md-4 col-form-label text-md-right">Price</label>
 
                         <div class="col-md-6">
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                            <input id="price" type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" required/>
+
+                            @if($errors->has('price'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('price') }}</strong>
+                                </span>
+                            @endif
                         </div>
                     </div>
 
