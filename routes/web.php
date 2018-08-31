@@ -34,3 +34,4 @@ Route::resource('order', "OrderController");
 Route::resource('purchase', "PurchaseController");
 
 Route::get('log', "LogController@index")->name('log.index');
+Route::get('statistic', "StatisticController@index")->name('statistic.index');

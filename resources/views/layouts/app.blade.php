@@ -46,6 +46,12 @@
                             </li>
                         @else
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('statistic.index') }}">
+                                    Statistics
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('product.index') }}">
                                     Products
                                 </a>
