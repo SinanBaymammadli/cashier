@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use App\Log;
 
 class LogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('sudo');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,8 +18,8 @@ class LogController extends Controller
      */
     public function index()
     {
-        $queries = DB::getQueryLog();
+        $logs = Log::all();
 
-        dd($queries);
+        return view('log.index', ['logs' => $logs]);
     }
 }

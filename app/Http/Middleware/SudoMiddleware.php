@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class SudoMiddleware
 {
     /**
      * Handle an incoming request.
@@ -21,7 +21,7 @@ class AdminMiddleware
         if (!Auth::guest()) {
             $user = auth()->user();
 
-            if ($user->hasRole(['admin', 'sudo'])) {
+            if ($user->hasRole(['sudo'])) {
                 return $next($request);
             } else {
                 return redirect($redirect_url);

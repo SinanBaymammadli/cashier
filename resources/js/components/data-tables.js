@@ -21,3 +21,8 @@ $("#order-table-js").DataTable({
   order: [[0, "desc"]],
   pageLength: 100,
 });
+
+$("#log-table-js").DataTable({
+  order: [[0, "desc"]],
+  pageLength: 100,
+});
